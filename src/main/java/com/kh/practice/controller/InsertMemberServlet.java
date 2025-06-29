@@ -1,41 +1,42 @@
 package com.kh.practice.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class InsertMemberServlet
- */
+import com.kh.practice.model.service.MemberService;
+import com.kh.practice.model.service.MemberServiceImpl;
+import com.kh.practice.model.vo.Member;
+
 @WebServlet("/member/insertMember")
 public class InsertMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MemberService service = new MemberServiceImpl();
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public InsertMemberServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		List<Member> list = service.selectAllMember();
+		Member m = new Member(
+				list.size() + 1,
+				request.getParameter("userId"),
+				request.getParameter("userPwd"),
+				request.getParameter("userName"),
+				request.getParameter("email"));
+		int updateCount = service.inserMember(m);
+		if (updateCount == 1) response.sendRedirect(request.getContextPath());
+		// 아니면 우짜까
 	}
 
 }

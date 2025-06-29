@@ -150,7 +150,6 @@ body {
 		function displayData(data){
 			const $resultDiv = $("#resultArea div");
 			$resultDiv.empty(); // 기존 내용 비우기
-
 			// 배열인지 아닌지 판단
 			if (Array.isArray(data)) {
 				if (data.length === 0) {
