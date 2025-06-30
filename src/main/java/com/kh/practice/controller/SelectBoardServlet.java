@@ -1,40 +1,34 @@
 package com.kh.practice.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class SelectBoardServlet
- */
+import com.google.gson.Gson;
+import com.kh.practice.model.service.BoardService;
+import com.kh.practice.model.service.BoardServiceImpl;
+import com.kh.practice.model.vo.Board;
+
 @WebServlet("/board/selectBoard")
 public class SelectBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private BoardService service = new BoardServiceImpl();
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public SelectBoardServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Board b = service.selectBoardByNo(Integer.parseInt(request.getParameter("boardNo")));
+		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(b, response.getWriter());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
