@@ -18,18 +18,9 @@ public class SearchMemberByIdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService service = new MemberServiceImpl();
        
-    public SearchMemberByIdServlet() {
-        super();
-    }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Member m = service.selectMemberById(request.getParameter("userId"));
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(m, response.getWriter());
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
 }
